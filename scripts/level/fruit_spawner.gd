@@ -30,10 +30,10 @@ func spawn_fruits():
 	var positions = []
 
 	if spawn_in_grid:
-		# Create a simple grid of fruits
+		# Create a simple grid of fruits (positioned along platform path)
 		for i in range(spawn_count):
-			var x = (i % 5) * grid_spacing
-			var z = -(i / 5) * grid_spacing
+			var x = -2 - (i % 5) * grid_spacing  # Start at x=-2, move left
+			var z = -(i / 5) * grid_spacing  # Move back
 			positions.append(Vector3(x, hover_height, z))
 	else:
 		# Manual positions (edit these!)
