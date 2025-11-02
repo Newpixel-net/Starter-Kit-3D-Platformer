@@ -1,6 +1,10 @@
 extends CharacterBody3D
+## Player Controller with movement, jumping, and spin attack
 
-signal coin_collected
+signal coin_collected  # Keep for compatibility
+signal fruit_collected(value: int)
+signal enemy_hit
+signal crate_broken
 
 @export_subgroup("Components")
 @export var view: Node3D
@@ -8,6 +12,8 @@ signal coin_collected
 @export_subgroup("Properties")
 @export var movement_speed = 250
 @export var jump_strength = 7
+@export var spin_attack_duration = 0.5
+@export var spin_attack_cooldown = 0.3
 
 var movement_velocity: Vector3
 var rotation_direction: float
@@ -18,28 +24,58 @@ var previously_floored = false
 var jump_single = true
 var jump_double = true
 
-var coins = 0
+# Spin attack variables
+var is_spinning = false
+var spin_timer = 0.0
+var spin_cooldown_timer = 0.0
 
 @onready var particles_trail = $ParticlesTrail
 @onready var sound_footsteps = $SoundFootsteps
 @onready var model = $Character
 @onready var animation = $Character/AnimationPlayer
 
-# Functions
+# Spin attack area - will be created in _ready()
+var spin_attack_area: Area3D
+
+
+func _ready() -> void:
+	# Create spin attack area
+	create_spin_attack_area()
+
+	# Start level timer when player spawns
+	PlayerStats.start_timer()
+
+
+# Create Area3D for spin attack detection
+func create_spin_attack_area() -> void:
+	spin_attack_area = Area3D.new()
+	spin_attack_area.name = "SpinAttackArea"
+
+	var collision_shape = CollisionShape3D.new()
+	var sphere = SphereShape3D.new()
+	sphere.radius = 2.0  # Attack radius
+	collision_shape.shape = sphere
+
+	spin_attack_area.add_child(collision_shape)
+	add_child(spin_attack_area)
+
+	# Connect to area detection
+	spin_attack_area.body_entered.connect(_on_spin_attack_hit)
+	spin_attack_area.area_entered.connect(_on_spin_attack_hit_area)
+
+	# Disable by default
+	spin_attack_area.monitoring = false
+
 
 func _physics_process(delta):
-
 	# Handle functions
-
 	handle_controls(delta)
 	handle_gravity(delta)
-
+	handle_spin_attack(delta)
 	handle_effects(delta)
 
 	# Movement
-
 	var applied_velocity: Vector3
-
 	applied_velocity = velocity.lerp(movement_velocity, delta * 10)
 	applied_velocity.y = -gravity
 
@@ -47,35 +83,53 @@ func _physics_process(delta):
 	move_and_slide()
 
 	# Rotation
-
 	if Vector2(velocity.z, velocity.x).length() > 0:
 		rotation_direction = Vector2(velocity.z, velocity.x).angle()
 
-	rotation.y = lerp_angle(rotation.y, rotation_direction, delta * 10)
+	# Spin animation rotates faster
+	var rotation_speed = 20.0 if is_spinning else 10.0
+	rotation.y = lerp_angle(rotation.y, rotation_direction, delta * rotation_speed)
 
 	# Falling/respawning
-
 	if position.y < -10:
-		get_tree().reload_current_scene()
+		die()
 
 	# Animation for scale (jumping and landing)
-
 	model.scale = model.scale.lerp(Vector3(1, 1, 1), delta * 10)
 
 	# Animation when landing
-
 	if is_on_floor() and gravity > 2 and !previously_floored:
 		model.scale = Vector3(1.25, 0.75, 1.25)
 		Audio.play("res://sounds/land.ogg")
 
 	previously_floored = is_on_floor()
 
+
+# Handle spin attack
+func handle_spin_attack(delta: float) -> void:
+	# Update cooldown
+	if spin_cooldown_timer > 0:
+		spin_cooldown_timer -= delta
+
+	# Update spin duration
+	if is_spinning:
+		spin_timer -= delta
+
+		# Spin the character model
+		model.rotation.y += delta * 30.0  # Fast spin
+
+		if spin_timer <= 0:
+			end_spin_attack()
+
+
 # Handle animation(s)
-
 func handle_effects(delta):
-
 	particles_trail.emitting = false
 	sound_footsteps.stream_paused = true
+
+	# Don't play normal animations during spin
+	if is_spinning:
+		return
 
 	if is_on_floor():
 		var horizontal_velocity = Vector2(velocity.x, velocity.z)
@@ -93,21 +147,19 @@ func handle_effects(delta):
 
 		elif animation.current_animation != "idle":
 			animation.play("idle", 0.1)
-			
+
 		if animation.current_animation == "walk":
 			animation.speed_scale = speed_factor
 		else:
 			animation.speed_scale = 1.0
-			
+
 	elif animation.current_animation != "jump":
 		animation.play("jump", 0.1)
 
+
 # Handle movement input
-
 func handle_controls(delta):
-
-	# Movement
-
+	# Movement (can move during spin but reduced speed)
 	var input := Vector3.ZERO
 
 	input.x = Input.get_axis("move_left", "move_right")
@@ -118,34 +170,35 @@ func handle_controls(delta):
 	if input.length() > 1:
 		input = input.normalized()
 
-	movement_velocity = input * movement_speed * delta
+	# Reduce movement during spin
+	var speed_multiplier = 0.5 if is_spinning else 1.0
+	movement_velocity = input * movement_speed * delta * speed_multiplier
 
 	# Jumping
-
 	if Input.is_action_just_pressed("jump"):
-
 		if jump_single or jump_double:
 			jump()
 
+	# Spin attack
+	if Input.is_action_just_pressed("spin_attack"):
+		if can_spin_attack():
+			start_spin_attack()
+
+
 # Handle gravity
-
 func handle_gravity(delta):
-
 	gravity += 25 * delta
 
 	if gravity > 0 and is_on_floor():
-
 		jump_single = true
 		gravity = 0
 
+
 # Jumping
-
 func jump():
-
 	Audio.play("res://sounds/jump.ogg")
 
 	gravity = -jump_strength
-
 	model.scale = Vector3(0.5, 1.5, 0.5)
 
 	if jump_single:
@@ -154,10 +207,108 @@ func jump():
 	else:
 		jump_double = false;
 
-# Collecting coins
 
+# Check if can perform spin attack
+func can_spin_attack() -> bool:
+	return !is_spinning and spin_cooldown_timer <= 0
+
+
+# Start spin attack
+func start_spin_attack() -> void:
+	if !can_spin_attack():
+		return
+
+	print("🌀 Spin attack!")
+	is_spinning = true
+	spin_timer = spin_attack_duration
+	spin_cooldown_timer = spin_attack_cooldown + spin_attack_duration
+
+	# Enable collision detection
+	spin_attack_area.monitoring = true
+
+	# Play spin sound (using existing sound for now)
+	# TODO: Add dedicated spin sound effect
+	Audio.play("res://sounds/jump.ogg", 1.2)  # Higher pitch
+
+	# Visual feedback - scale character
+	model.scale = Vector3(1.3, 0.7, 1.3)
+
+
+# End spin attack
+func end_spin_attack() -> void:
+	is_spinning = false
+	spin_timer = 0.0
+
+	# Disable collision detection
+	spin_attack_area.monitoring = false
+
+	# Reset model rotation
+	model.rotation.y = 0.0
+
+
+# Called when spin attack hits a body
+func _on_spin_attack_hit(body: Node3D) -> void:
+	if !is_spinning:
+		return
+
+	# Check if it's an enemy
+	if body.has_method("take_damage"):
+		print("💥 Hit enemy!")
+		body.take_damage(1)
+		enemy_hit.emit()
+
+		# Add score for enemy hit
+		PlayerStats.add_score(PlayerStats.ENEMY_POINTS)
+
+	# Check if it's a crate
+	elif body.has_method("break_crate"):
+		print("📦 Broke crate!")
+		body.break_crate()
+		crate_broken.emit()
+
+
+# Called when spin attack hits an area
+func _on_spin_attack_hit_area(area: Area3D) -> void:
+	if !is_spinning:
+		return
+
+	# Check if parent is a crate or enemy
+	var parent = area.get_parent()
+	if parent and parent.has_method("break_crate"):
+		print("📦 Broke crate (area)!")
+		parent.break_crate()
+		crate_broken.emit()
+
+
+# Collecting coins (legacy - now uses fruits)
 func collect_coin():
+	collect_fruit(1)
+	coin_collected.emit(PlayerStats.get_fruits())
 
-	coins += 1
 
-	coin_collected.emit(coins)
+# Collecting fruits (new system)
+func collect_fruit(value: int = 1) -> void:
+	PlayerStats.collect_fruit(value)
+	fruit_collected.emit(value)
+	print("🍎 Collected fruit! Total: ", PlayerStats.get_fruits())
+
+
+# Player dies
+func die() -> void:
+	print("💀 Player died!")
+	PlayerStats.lose_life()
+
+	# Check if game over or respawn
+	if PlayerStats.get_lives() > 0:
+		# Respawn (reload scene for now)
+		# TODO: Implement checkpoint respawn
+		await get_tree().create_timer(1.0).timeout
+		get_tree().reload_current_scene()
+	else:
+		# Game over handled by PlayerStats -> GameManager
+		pass
+
+
+# Get player stats (for UI)
+func get_stats() -> Dictionary:
+	return PlayerStats.get_stats()
