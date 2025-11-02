@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 Audio="*res://scripts/audio.gd"
 GameManager="*res://scripts/autoload/game_manager.gd"
 PlayerStats="*res://scripts/autoload/player_stats.gd"
+AssetDiagnostic="*res://scripts/autoload/asset_diagnostic.gd"
 
 [display]
 
