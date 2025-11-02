@@ -1,54 +1,63 @@
 extends Node3D
-## Crate Spawner - Automatically spawns breakable crates
-## Usage: Add this as a child node to your main scene
+## Simple Crate Spawner - Error-proof version
 
-@export var crate_model_path: String = "res://models/obstacles/crate.glb"
-@export var crate_positions: Array[Vector3] = [
-	Vector3(3, 0.5, -1),
-	Vector3(8, 1.5, -6),
-	Vector3(13, 2.5, -9),
-	Vector3(18, 3.5, -7),
-	Vector3(22, 4.5, -3),
-]
+@export var spawn_count: int = 5
+@export var use_fallback_boxes: bool = false
 
 func _ready():
-	await get_tree().process_frame
-	spawn_crates()
+	call_deferred("spawn_crates")
 
 
 func spawn_crates():
-	for pos in crate_positions:
+	var positions = [
+		Vector3(3, 0.5, -1),
+		Vector3(8, 1.5, -6),
+		Vector3(13, 2.5, -9),
+		Vector3(18, 3.5, -7),
+		Vector3(22, 4.5, -3),
+	]
+
+	var spawned = 0
+	for i in range(min(spawn_count, positions.size())):
 		var crate = create_crate()
 		if crate:
-			crate.position = pos
+			crate.position = positions[i]
 			add_child(crate)
-			print("📦 Spawned crate at ", pos)
+			spawned += 1
 
-	print("✅ Spawned ", crate_positions.size(), " crates!")
+	print("✅ CrateSpawner: Spawned ", spawned, " crates!")
 
 
 func create_crate() -> StaticBody3D:
 	var crate = StaticBody3D.new()
 	crate.name = "Crate"
 
-	# Load crate model
+	# Create mesh
 	var mesh_inst = MeshInstance3D.new()
-	if ResourceLoader.exists(crate_model_path):
-		var loaded_resource = load(crate_model_path)
-		if loaded_resource is PackedScene:
-			var model = loaded_resource.instantiate()
-			mesh_inst.add_child(model)
-		elif loaded_resource is Mesh:
-			mesh_inst.mesh = loaded_resource
-	else:
-		# Fallback: create simple box
-		print("⚠️ Crate model not found, using fallback box")
+
+	# Try to load crate model
+	var crate_model_path = "res://models/obstacles/crate.glb"
+	var model_loaded = false
+
+	if not use_fallback_boxes and ResourceLoader.exists(crate_model_path):
+		var loaded = load(crate_model_path)
+		if loaded:
+			if loaded is PackedScene:
+				var model = loaded.instantiate()
+				mesh_inst.add_child(model)
+				model_loaded = true
+			elif loaded is Mesh:
+				mesh_inst.mesh = loaded
+				model_loaded = true
+
+	# Fallback to simple box if model fails
+	if not model_loaded:
 		var box_mesh = BoxMesh.new()
 		box_mesh.size = Vector3(1, 1, 1)
 		mesh_inst.mesh = box_mesh
 
 		var material = StandardMaterial3D.new()
-		material.albedo_color = Color(0.6, 0.4, 0.2)  # Brown color
+		material.albedo_color = Color(0.6, 0.4, 0.2)  # Brown
 		mesh_inst.material_override = material
 
 	crate.add_child(mesh_inst)
@@ -60,11 +69,15 @@ func create_crate() -> StaticBody3D:
 	collision.shape = box_shape
 	crate.add_child(collision)
 
-	# Attach crate script
-	var crate_script = load("res://scripts/crate.gd")
-	if crate_script:
-		crate.set_script(crate_script)
-		crate.contains_fruit = true  # Crates contain fruit!
-		crate.fruit_count = 3
+	# Try to attach crate script
+	var crate_script_path = "res://scripts/crate.gd"
+	if ResourceLoader.exists(crate_script_path):
+		var script = load(crate_script_path)
+		if script:
+			crate.set_script(script)
+			# Set properties if script loaded
+			if crate.has_method("set"):
+				crate.set("contains_fruit", true)
+				crate.set("fruit_count", 3)
 
 	return crate
