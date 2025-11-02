@@ -30,6 +30,7 @@ const PAUSE_MENU_SCENE = "res://scenes/ui/pause_menu.tscn"
 const LEVEL_COMPLETE_SCENE = "res://scenes/ui/level_complete.tscn"
 const GAME_OVER_SCENE = "res://scenes/ui/game_over.tscn"
 const LEVEL_1_SCENE = "res://scenes/levels/level_01_jungle.tscn"
+const DEMO_SCENE = "res://scenes/main.tscn"  # Fallback demo scene
 
 # Current state
 var current_state: GameState = GameState.MENU
