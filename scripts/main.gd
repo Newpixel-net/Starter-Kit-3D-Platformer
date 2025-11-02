@@ -10,11 +10,10 @@ func _ready() -> void:
 		$Sun.shadow_opacity = 0.85
 		$Environment.environment.background_energy_multiplier = 0.25
 
-	# TEST: Spawn one large visible fruit to verify assets work
-	setup_test_fruit()
-
-	# CRITICAL: Setup jungle environment and collectibles
-	setup_level_spawners()
+	# AUTO-SPAWNING DISABLED - User will manually add objects in editor
+	# Uncomment these lines if you want automatic spawning:
+	# setup_test_fruit()
+	# setup_level_spawners()
 
 
 func setup_level_spawners():
