@@ -1,39 +1,56 @@
 extends Node3D
-## Fruit Spawner - Automatically spawns fruit collectibles in the level
-## Usage: Add this as a child node to your main scene
+## Simple Fruit Spawner - Error-proof version
+## Spawns coins as fruits (temporary until we create fruit scenes)
 
-const FRUIT_SCENE = preload("res://objects/coin.tscn")  # Using coin scene temporarily
-
-## Fruit spawn positions (edit these in the inspector or in code)
-@export var fruit_positions: Array[Vector3] = [
-	Vector3(2, 1.5, 0),
-	Vector3(4, 1.5, 0),
-	Vector3(6, 1.5, -3),
-	Vector3(8, 1.5, -3),
-	Vector3(12, 2.5, -6),
-	Vector3(14, 2.5, -6),
-	Vector3(16, 3.5, -9),
-	Vector3(18, 3.5, -9),
-	Vector3(22, 4.5, -5),
-	Vector3(24, 4.5, -5),
-	Vector3(3, 1.5, -1),
-	Vector3(7, 1.5, -4),
-	Vector3(11, 2.5, -7),
-	Vector3(17, 3.5, -8),
-	Vector3(23, 4.5, -6),
-]
+## Edit these positions to place fruits where you want
+@export var spawn_count: int = 15
+@export var spawn_in_grid: bool = true
+@export var grid_spacing: float = 3.0
 
 func _ready():
-	# Small delay to ensure scene is fully loaded
-	await get_tree().process_frame
-	spawn_fruits()
+	call_deferred("spawn_fruits")
 
 
 func spawn_fruits():
-	for pos in fruit_positions:
-		var fruit = FRUIT_SCENE.instantiate()
-		fruit.position = pos
-		add_child(fruit)
-		print("🍎 Spawned fruit at ", pos)
+	var coin_scene_path = "res://objects/coin.tscn"
 
-	print("✅ Spawned ", fruit_positions.size(), " fruits!")
+	# Check if coin scene exists
+	if not ResourceLoader.exists(coin_scene_path):
+		push_error("❌ Coin scene not found at: " + coin_scene_path)
+		return
+
+	var coin_scene = load(coin_scene_path)
+	if not coin_scene:
+		push_error("❌ Failed to load coin scene")
+		return
+
+	var positions = []
+
+	if spawn_in_grid:
+		# Create a simple grid of fruits
+		for i in range(spawn_count):
+			var x = (i % 5) * grid_spacing
+			var z = -(i / 5) * grid_spacing
+			positions.append(Vector3(x, 1.5, z))
+	else:
+		# Manual positions (edit these!)
+		positions = [
+			Vector3(2, 1.5, 0),
+			Vector3(4, 1.5, 0),
+			Vector3(6, 1.5, -3),
+			Vector3(8, 1.5, -3),
+			Vector3(10, 1.5, -6),
+			Vector3(12, 1.5, -6),
+			Vector3(14, 1.5, -9),
+			Vector3(16, 1.5, -9),
+		]
+
+	var spawned = 0
+	for pos in positions:
+		var fruit = coin_scene.instantiate()
+		if fruit:
+			fruit.position = pos
+			add_child(fruit)
+			spawned += 1
+
+	print("✅ FruitSpawner: Spawned ", spawned, " fruits!")
