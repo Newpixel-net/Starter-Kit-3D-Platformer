@@ -296,17 +296,24 @@ func collect_fruit(value: int = 1) -> void:
 # Player dies
 func die() -> void:
 	print("💀 Player died!")
+
+	# Disable player control during death
+	set_physics_process(false)
+
 	PlayerStats.lose_life()
 
 	# Check if game over or respawn
 	if PlayerStats.get_lives() > 0:
-		# Respawn (reload scene for now)
-		# TODO: Implement checkpoint respawn
+		# Respawn after delay
+		print("⏳ Respawning in 1 second...")
 		await get_tree().create_timer(1.0).timeout
-		get_tree().reload_current_scene()
+
+		# Use call_deferred to safely reload scene
+		get_tree().call_deferred("reload_current_scene")
 	else:
 		# Game over handled by PlayerStats -> GameManager
-		pass
+		print("❌ Game Over - no lives remaining")
+		GameManager.trigger_game_over()
 
 
 # Get player stats (for UI)
