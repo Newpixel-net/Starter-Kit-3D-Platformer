@@ -97,13 +97,25 @@ Death and respawn now works smoothly!
 
 ## ❌ **IF YOU STILL SEE ERRORS:**
 
-### **Common Error 1: "Coin scene not found"**
-**Cause:** `objects/coin.tscn` doesn't exist
-**Fix:** The spawner will show this error but won't crash
+### **Common Error 1: Assets not displaying (MAJOR ISSUE - SEE ASSET_IMPORT_FIX.md)**
+**Cause:** GLB files exist but Godot hasn't imported them yet (no .import files)
+**Symptoms:**
+- Spawners report success but no 3D models appear
+- Only fallback boxes/coins show up
+- Console shows warnings about failed models
 
-### **Common Error 2: "Model not found"**
-**Cause:** Kenney models haven't been imported yet
-**Fix:** Spawners will use colored boxes instead (fallback)
+**Fix:** **READ ASSET_IMPORT_FIX.md** - Complete solution with 3 methods:
+1. Right-click `models` folder → Reimport (30 seconds, RECOMMENDED)
+2. Run `scripts/tools/asset_importer.gd` verification script
+3. Touch files to force rescan
+
+### **Common Error 2: "Coin scene not found"**
+**Cause:** `objects/coin.tscn` doesn't exist
+**Fix:** The spawner will show this error but won't crash (uses fallback)
+
+### **Common Error 3: "Model not found" or "Failed to load"**
+**Cause:** Specific GLB file is corrupted or missing
+**Fix:** Check which model failed, verify file exists
 
 ### **Common Error 3: "Nothing spawns"**
 **Possible causes:**
@@ -204,21 +216,50 @@ If you still have problems:
 
 ## 🎮 **EXPECTED CURRENT STATE:**
 
-**What you SHOULD see when running the game (F5):**
+### **BEFORE Asset Import Fix:**
+
+**What you currently see when running the game (F5):**
 
 ```
 Top-Left HUD:
 ❤️ x3  |  🍎 0/100  |  ⏱️ 0:00  |  💎 0
 
 In the level:
-- 15 coins/fruits arranged in a grid pattern
-- 5 brown crates scattered around
-- Maybe some jungle decorations (if models loaded)
+- 15 coins/fruits arranged in a grid pattern (fallback)
+- 5 brown crates scattered around (fallback boxes)
+- Minimal or no jungle decorations
+
+Console output:
+✅ FruitSpawner: Spawned 15 fruits!
+⚠️  FruitSpawner: 15 fruits failed to load (trying fallback...)
+✅ CrateSpawner: Spawned 5 crates!
+✅ JungleSpawner: Spawned 0 decorations total!
+```
+
+### **AFTER Asset Import Fix (Expected):**
+
+**What you SHOULD see after fixing imports:**
+
+```
+Top-Left HUD:
+❤️ x3  |  🍎 0/100  |  ⏱️ 0:00  |  💎 0
+
+In the level:
+- 15 colorful 3D FRUITS in variety (apples, oranges, bananas, cherries, etc.)
+- 5 textured WOODEN CRATES (actual 3D Kenney models)
+- 10 TREES (palms, oaks, pines) in background
+- 15 ROCKS (various sizes) scattered around
+- 20 PLANTS (bushes, grass, mushrooms)
+- 15 COLORFUL FLOWERS (red, purple, yellow)
 
 Console output:
 ✅ FruitSpawner: Spawned 15 fruits!
 ✅ CrateSpawner: Spawned 5 crates!
-✅ JungleSpawner: Spawned X decorations total!
+✅ JungleSpawner: Spawned 60 decorations total!
+   🌴 Trees: 10 items
+   🌴 Rocks: 15 items
+   🌴 Plants: 20 items
+   🌴 Flowers: 15 items
 ```
 
 **What you should be able to DO:**
