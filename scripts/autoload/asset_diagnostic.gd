@@ -6,9 +6,10 @@ func _ready():
 
 
 func check_asset_imports():
-	print("\n" + "="*50)
+	var separator = "=================================================="
+	print("\n" + separator)
 	print("🔍 ASSET IMPORT DIAGNOSTIC")
-	print("="*50)
+	print(separator)
 
 	var test_assets = {
 		"Fruit (Apple)": "res://models/collectibles/fruits/apple.glb",
@@ -37,7 +38,7 @@ func check_asset_imports():
 			print("❌ ", asset_name, " - NOT FOUND OR NOT IMPORTED")
 			all_imported = false
 
-	print("="*50)
+	print(separator)
 
 	if all_imported:
 		print("🎉 ALL ASSETS IMPORTED SUCCESSFULLY!")
@@ -52,4 +53,4 @@ func check_asset_imports():
 		print("   5. Run game again")
 		print("\n   → OR read ASSET_IMPORT_FIX.md for full instructions")
 
-	print("="*50 + "\n")
+	print(separator + "\n")

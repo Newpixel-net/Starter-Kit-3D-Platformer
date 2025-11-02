@@ -1,12 +1,14 @@
 extends Node3D
-## Fruit Spawner - Spawns collectible fruits
-## SIMPLIFIED VERSION - No runtime script generation
+## Fruit Spawner - Uses actual 3D fruit models from Kenney Food Kit
+## Spawns variety of fruits (apples, bananas, oranges, etc.)
 
+## Edit these positions to place fruits where you want
 @export var spawn_count: int = 15
 @export var spawn_in_grid: bool = true
 @export var grid_spacing: float = 3.0
-@export var use_variety: bool = true
+@export var use_variety: bool = true  # Mix different fruit types
 @export var hover_height: float = 1.5
+@export var rotation_speed: float = 2.0
 
 # Available fruit models
 var fruit_models = [
@@ -28,12 +30,13 @@ func spawn_fruits():
 	var positions = []
 
 	if spawn_in_grid:
+		# Create a simple grid of fruits (positioned along platform path)
 		for i in range(spawn_count):
-			var x = -2 - (i % 5) * grid_spacing
-			var z = -(i / 5) * grid_spacing
+			var x = -2 - (i % 5) * grid_spacing  # Start at x=-2, move left
+			var z = -(i / 5) * grid_spacing  # Move back
 			positions.append(Vector3(x, hover_height, z))
 	else:
-		# Manual positions
+		# Manual positions (edit these!)
 		positions = [
 			Vector3(2, hover_height, 0),
 			Vector3(4, hover_height, 0),
@@ -58,16 +61,18 @@ func spawn_fruits():
 		else:
 			failed += 1
 
+		# Cycle through fruit types if variety is enabled
 		if use_variety:
 			fruit_type_index = (fruit_type_index + 1) % fruit_models.size()
 
 	if spawned > 0:
 		print("✅ FruitSpawner: Spawned ", spawned, " fruits!")
 	if failed > 0:
-		print("⚠️  FruitSpawner: ", failed, " fruits failed to load")
+		print("⚠️  FruitSpawner: ", failed, " fruits failed to load (trying fallback...)")
+		spawn_fallback_fruits(failed)
 
 
-func create_fruit(type_index: int = 0) -> Area3D:
+func create_fruit(type_index: int = 0) -> Node3D:
 	var model_path = fruit_models[type_index % fruit_models.size()]
 
 	# Check if model exists
@@ -79,11 +84,11 @@ func create_fruit(type_index: int = 0) -> Area3D:
 	if not loaded:
 		return null
 
-	# Create fruit as Area3D for collection
-	var fruit = Area3D.new()
+	# Create fruit node
+	var fruit = Node3D.new()
 	fruit.name = "Fruit_" + model_path.get_file().get_basename()
 
-	# Add 3D model as child
+	# Add 3D model
 	var model_instance = null
 	if loaded is PackedScene:
 		model_instance = loaded.instantiate()
@@ -94,55 +99,73 @@ func create_fruit(type_index: int = 0) -> Area3D:
 
 	if model_instance:
 		fruit.add_child(model_instance)
+		# Scale fruits to reasonable size
+		fruit.scale = Vector3(0.5, 0.5, 0.5)
 
-	# Scale fruit
-	fruit.scale = Vector3(0.5, 0.5, 0.5)
+	# Add Area3D for collection
+	var area = Area3D.new()
+	area.name = "CollectionArea"
+	fruit.add_child(area)
 
 	# Add collision shape
 	var collision = CollisionShape3D.new()
 	var sphere = SphereShape3D.new()
 	sphere.radius = 0.5
 	collision.shape = sphere
-	fruit.add_child(collision)
+	area.add_child(collision)
 
 	# Connect collection signal
-	fruit.body_entered.connect(_on_fruit_collected.bind(fruit))
+	area.body_entered.connect(_on_fruit_collected.bind(fruit))
 
-	# Store initial position for bobbing animation
-	fruit.set_meta("start_y", hover_height)
-	fruit.set_meta("rotation_speed", 2.0)
-	fruit.set_meta("bob_speed", 2.0)
-	fruit.set_meta("bob_height", 0.3)
+	# Add rotation script
+	var script_code = """
+extends Node3D
+
+var rotation_speed = %f
+var bob_height = 0.3
+var bob_speed = 2.0
+var start_y = 0.0
+
+func _ready():
+	start_y = position.y
+
+func _process(delta):
+	rotation.y += delta * rotation_speed
+	position.y = start_y + sin(Time.get_ticks_msec() / 1000.0 * bob_speed) * bob_height
+""" % rotation_speed
+
+	var script = GDScript.new()
+	script.source_code = script_code
+	script.reload()
+	fruit.set_script(script)
 
 	return fruit
 
 
-func _process(delta):
-	# Animate all fruit children
-	for child in get_children():
-		if child is Area3D and child.has_meta("start_y"):
-			# Rotation
-			child.rotation.y += delta * child.get_meta("rotation_speed")
-
-			# Bobbing animation
-			var time = Time.get_ticks_msec() / 1000.0
-			var start_y = child.get_meta("start_y")
-			var bob_speed = child.get_meta("bob_speed")
-			var bob_height = child.get_meta("bob_height")
-			child.position.y = start_y + sin(time * bob_speed) * bob_height
-
-
-func _on_fruit_collected(body: Node3D, fruit: Area3D):
-	if not is_instance_valid(body) or not is_instance_valid(fruit):
-		return
-
+func _on_fruit_collected(body: Node3D, fruit: Node3D):
 	if body.has_method("collect_fruit"):
 		body.collect_fruit(1)
-
-		# Play sound if Audio singleton exists
-		if has_node("/root/Audio"):
-			var audio = get_node("/root/Audio")
-			if audio.has_method("play"):
-				audio.play("res://sounds/coin.ogg", randf_range(0.9, 1.1), 0.0)
-
+		Audio.play("res://sounds/coin.ogg", randf_range(0.9, 1.1), 0.0)
 		fruit.queue_free()
+
+
+func spawn_fallback_fruits(count: int):
+	# Fallback to coin scene if models don't load
+	var coin_scene_path = "res://objects/coin.tscn"
+	if not ResourceLoader.exists(coin_scene_path):
+		return
+
+	var coin_scene = load(coin_scene_path)
+	if not coin_scene:
+		return
+
+	print("   → Using coin fallback for ", count, " fruits")
+
+	# Spawn coins at remaining positions
+	for i in range(count):
+		var x = ((spawn_count - count + i) % 5) * grid_spacing
+		var z = -((spawn_count - count + i) / 5) * grid_spacing
+		var coin = coin_scene.instantiate()
+		if coin:
+			coin.position = Vector3(x, hover_height, z)
+			add_child(coin)
