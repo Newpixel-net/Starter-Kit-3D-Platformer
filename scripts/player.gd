@@ -129,32 +129,53 @@ func handle_effects(delta):
 
 	# Don't play normal animations during spin
 	if is_spinning:
+		# Could play a spin animation here if we had one
 		return
 
 	if is_on_floor():
 		var horizontal_velocity = Vector2(velocity.x, velocity.z)
 		var speed_factor = horizontal_velocity.length() / movement_speed / delta
-		if speed_factor > 0.05:
-			if animation.current_animation != "walk":
-				animation.play("walk", 0.1)
 
+		if speed_factor > 0.05:
+			# Choose walk or run based on speed
+			if speed_factor > 0.5:
+				# Running (fast movement)
+				if animation.current_animation != "run":
+					animation.play("run", 0.15)
+				animation.speed_scale = speed_factor * 0.8
+			else:
+				# Walking (slow movement)
+				if animation.current_animation != "walk":
+					animation.play("walk", 0.15)
+				animation.speed_scale = speed_factor * 1.2
+
+			# Sound effects based on speed
 			if speed_factor > 0.3:
 				sound_footsteps.stream_paused = false
-				sound_footsteps.pitch_scale = speed_factor
+				sound_footsteps.pitch_scale = clamp(speed_factor, 0.8, 1.5)
 
+			# Particle trail for fast movement
 			if speed_factor > 0.75:
 				particles_trail.emitting = true
 
-		elif animation.current_animation != "idle":
-			animation.play("idle", 0.1)
-
-		if animation.current_animation == "walk":
-			animation.speed_scale = speed_factor
 		else:
+			# Standing still - idle animation
+			if animation.current_animation != "idle":
+				animation.play("idle", 0.2)
 			animation.speed_scale = 1.0
 
-	elif animation.current_animation != "jump":
-ג		animation.play("jump", 0.1)
+	else:
+		# In the air
+		if velocity.y > 0:
+			# Rising (jumping up)
+			if animation.current_animation != "jump":
+				animation.play("jump", 0.1)
+		else:
+			# Falling down
+			if animation.current_animation != "fall":
+				animation.play("fall", 0.1)
+
+		animation.speed_scale = 1.0
 
 
 # Handle movement input
