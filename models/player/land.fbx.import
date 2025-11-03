@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://354imxnfxmod"
-path="res://.godot/imported/Swing To Land.fbx-daba61451bc04d2f6e41cb6ef0019fa7.scn"
+uid="uid://dqtixijewrm7s"
+path="res://.godot/imported/land.fbx-a292031470d65b3945a1f331e324e2db.scn"
 
 [deps]
 
-source_file="res://models/player/Swing To Land.fbx"
-dest_files=["res://.godot/imported/Swing To Land.fbx-daba61451bc04d2f6e41cb6ef0019fa7.scn"]
+source_file="res://models/player/land.fbx"
+dest_files=["res://.godot/imported/land.fbx-a292031470d65b3945a1f331e324e2db.scn"]
 
 [params]
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://csykt720d4ynk"
-path="res://.godot/imported/Jump From Wall.fbx-2abda6be8cff2cbde68704964ff858a6.scn"
+uid="uid://d2wfdiph3158x"
+path="res://.godot/imported/fall.fbx-01ef0bd675108fd2c04d2331b8598d5e.scn"
 
 [deps]
 
-source_file="res://models/player/Jump From Wall.fbx"
-dest_files=["res://.godot/imported/Jump From Wall.fbx-2abda6be8cff2cbde68704964ff858a6.scn"]
+source_file="res://models/player/fall.fbx"
+dest_files=["res://.godot/imported/fall.fbx-01ef0bd675108fd2c04d2331b8598d5e.scn"]
 
 [params]
 

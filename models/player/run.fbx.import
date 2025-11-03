@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bv25m1f32nqq"
-path="res://.godot/imported/Falling.fbx-73d9302d50e2dc5d02bad690edcd9b8d.scn"
+uid="uid://hlrjl1bcoibl"
+path="res://.godot/imported/run.fbx-ef6ac31730b4d33c7ec3a0eda472c16d.scn"
 
 [deps]
 
-source_file="res://models/player/Falling.fbx"
-dest_files=["res://.godot/imported/Falling.fbx-73d9302d50e2dc5d02bad690edcd9b8d.scn"]
+source_file="res://models/player/run.fbx"
+dest_files=["res://.godot/imported/run.fbx-ef6ac31730b4d33c7ec3a0eda472c16d.scn"]
 
 [params]
 

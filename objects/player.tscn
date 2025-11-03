@@ -75,7 +75,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "clips": PackedStringArray("res://models/player/Jump From Wall.fbx::Armature|mixamo.com|Layer0"),
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(-2.3666666)
 }
 
 [sub_resource type="Animation" id="Animation_land"]

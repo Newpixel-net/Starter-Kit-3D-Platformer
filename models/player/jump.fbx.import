@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://xacrdp0v1why"
-path="res://.godot/imported/Standing W_Briefcase Idle.fbx-5d969b2879f67291c6776d40ab670fc9.scn"
+uid="uid://7hbawrlye0or"
+path="res://.godot/imported/jump.fbx-9ba5e426b777cc4a28ffc2fef44885c1.scn"
 
 [deps]
 
-source_file="res://models/player/Standing W_Briefcase Idle.fbx"
-dest_files=["res://.godot/imported/Standing W_Briefcase Idle.fbx-5d969b2879f67291c6776d40ab670fc9.scn"]
+source_file="res://models/player/jump.fbx"
+dest_files=["res://.godot/imported/jump.fbx-9ba5e426b777cc4a28ffc2fef44885c1.scn"]
 
 [params]
 
