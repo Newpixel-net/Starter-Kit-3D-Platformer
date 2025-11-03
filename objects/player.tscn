@@ -160,7 +160,7 @@ _data = {
 &"walk": SubResource("Animation_walk")
 }
 
-[node name="player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D"]
 slide_on_ceiling = false
 script = ExtResource("1_ffboj")
 
@@ -193,7 +193,7 @@ autoplay = true
 [node name="Character" parent="." instance=ExtResource("5_f46kd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.045980632, 0.27492583, 0)
 
-[node name="Skeleton3D" parent="Character" index="0"]
+[node name="Skeleton3D" parent="Character" index="1"]
 bones/0/position = Vector3(-0.022790246, 0.50191426, -0.003910728)
 bones/0/rotation = Quaternion(0.01765699, 0.5550108, -0.0374121, 0.8308139)
 bones/1/rotation = Quaternion(0.034472156, -0.015175559, 0.0040289876, 0.9992823)
@@ -242,7 +242,7 @@ bones/30/rotation = Quaternion(0.55150515, 0.1046772, 0.15736605, 0.8124782)
 bones/31/position = Vector3(-1.0464052e-09, 0.18334906, 1.2838453e-10)
 bones/31/rotation = Quaternion(0.4001702, 0.043122973, -0.012384654, 0.9153419)
 
-[node name="AnimationPlayer" parent="Character" index="1"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character" index="0"]
 libraries = {
 &"": SubResource("AnimationLibrary_main")
 }
