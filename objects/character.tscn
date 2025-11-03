@@ -11,13 +11,13 @@ transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 
 transform = Transform3D(0.965926, 0, -0.258819, 0, 1, 0, 0.258819, 0, 0.965926, -0.125, 0.17625, -0.02375)
 
 [node name="torso" parent="character/root" index="2"]
-transform = Transform3D(1, 0, 0, 0, 0.996194, 0.0871557, 0, -0.0871557, 0.996194, -1.80478e-15, 0.17625, -0.02375)
+transform = Transform3D(0.9996388, 0.0023422951, -0.02677255, 0, 0.996194, 0.0871557, 0.026874835, -0.08712422, 0.9958342, 0.03120926, 0.24945962, -0.06031757)
 
 [node name="arm-left" parent="character/root/torso" index="0"]
-transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0.3, 0.175, 0)
+transform = Transform3D(0.7071071, 0.707107, 0, -0.7071069, 0.7071069, -1.4901161e-08, 0, -7.450581e-09, 1, 0.7482212, 0.3071916, -0.1737026)
 
 [node name="arm-right" parent="character/root/torso" index="1"]
-transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -0.3, 0.1195, 0)
+transform = Transform3D(0.707107, -0.70710707, 0, 0.70710695, 0.70710695, -7.450581e-09, -3.7252903e-09, 0, 1, -0.87126344, 0.14897175, 0.14248613)
 
 [node name="antenna" parent="character/root/torso" index="2"]
 transform = Transform3D(1, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0.6, 0)
