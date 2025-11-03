@@ -30,7 +30,8 @@ script = ExtResource("1_jkv2x")
 environment = ExtResource("1_ahusb")
 
 [node name="Player" parent="." node_paths=PackedStringArray("view") groups=["player"] instance=ExtResource("2_onms2")]
-transform = Transform3D(0.9998948, -0.014503177, 0, 0.014503177, 0.9998948, 0, 0, 0, 1, 0.08336836, 0.43499696, -0.028911114)
+transform = Transform3D(0.9998948, -0.014503177, 0, 0.014500245, 0.9996927, 0.020104839, -0.00029158403, -0.020102723, 0.9997979, 0.22379126, 0.2143175, -0.1741906)
+wall_min_slide_angle = 0.20071286
 view = NodePath("../View")
 
 [node name="View" type="Node3D" parent="." node_paths=PackedStringArray("target")]

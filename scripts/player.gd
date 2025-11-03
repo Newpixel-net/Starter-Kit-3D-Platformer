@@ -154,7 +154,7 @@ func handle_effects(delta):
 			animation.speed_scale = 1.0
 
 	elif animation.current_animation != "jump":
-		animation.play("jump", 0.1)
+ג		animation.play("jump", 0.1)
 
 
 # Handle movement input
