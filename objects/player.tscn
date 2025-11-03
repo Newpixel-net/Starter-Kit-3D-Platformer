@@ -167,14 +167,14 @@ autoplay = true
 [node name="Character" parent="." instance=ExtResource("5_f46kd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.045980632, 0.27492583, 0)
 
-[node name="AnimationPlayer" parent="Character" index="0"]
+[node name="AnimationPlayer" parent="Character"]
 libraries = {
 "": SubResource("AnimationLibrary_main")
 }
 autoplay = "idle"
 playback_default_blend_time = 0.2
 
-[node name="Skeleton3D" parent="Character" index="1"]
+[node name="Skeleton3D" parent="Character" index="0"]
 bones/0/position = Vector3(-0.022790246, 0.50191426, -0.003910728)
 bones/0/rotation = Quaternion(0.01765699, 0.5550108, -0.0374121, 0.8308139)
 bones/1/rotation = Quaternion(0.034472156, -0.015175559, 0.0040289876, 0.9992823)
