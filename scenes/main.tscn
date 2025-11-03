@@ -29,20 +29,20 @@ script = ExtResource("1_jkv2x")
 [node name="Environment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_ahusb")
 
-[node name="Player" parent="." node_paths=PackedStringArray("view") groups=["player"] instance=ExtResource("2_onms2")]
+[node name="player" parent="." node_paths=PackedStringArray("view") groups=["player"] instance=ExtResource("2_onms2")]
 transform = Transform3D(-0.01208369, 0.008228127, -0.69484615, 0.009975112, 0.6948816, 0.008055077, 0.69482327, -0.009832856, -0.012199731, 0.02888292, 0.34590745, 0.24947028)
 wall_min_slide_angle = 0.20071286
 view = NodePath("../View")
 
 [node name="View" type="Node3D" parent="." node_paths=PackedStringArray("target")]
-transform = Transform3D(0.707107, -0.298836, 0.640856, 0, 0.906308, 0.422618, -0.707107, -0.298836, 0.640856, 0, 0, 0)
+transform = Transform3D(0.2621893, -0.4078336, 0.87460136, 0, 0.90630776, 0.42261803, -0.9650167, -0.110805966, 0.23762399, 0, 0, 0)
 script = ExtResource("5_bg0fr")
-target = NodePath("../Player")
+target = NodePath("../player")
 
 [node name="Camera" type="Camera3D" parent="View"]
-transform = Transform3D(0.99813396, -0.021755904, 0.05705157, 0.021512702, 0.99975675, 0.004873544, -0.057143778, -0.0036374778, 0.99836004, 0.24493647, 0.65343976, 8.846655)
+transform = Transform3D(0.9981339, -0.021755926, 0.057051674, 0.021512702, 0.9997567, 0.0048739086, -0.05714377, -0.003637476, 0.99836004, 0.95, 0.78, 9.777)
 current = true
-fov = 40.0
+fov = 36.5
 
 [node name="World" type="Node3D" parent="."]
 
@@ -221,4 +221,4 @@ metadata/_edit_use_anchors_ = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6014132, -2.573875, 7.238248)
 mesh = ExtResource("16_jbj1t")
 
-[connection signal="coin_collected" from="Player" to="HUD" method="_on_coin_collected"]
+[connection signal="coin_collected" from="player" to="HUD" method="_on_coin_collected"]
