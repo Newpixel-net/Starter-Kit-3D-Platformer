@@ -35,6 +35,20 @@ gravity = Vector3(0, 0.1, 0)
 scale_min = 0.75
 scale_curve = SubResource("CurveTexture_f46kd")
 
+[sub_resource type="Animation" id="Animation_fall"]
+resource_name = "fall"
+loop_mode = 1
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("res://models/player/Falling.fbx::Armature|mixamo.com|Layer0"),
+"times": PackedFloat32Array(0)
+}
+
 [sub_resource type="Animation" id="Animation_idle"]
 resource_name = "idle"
 length = 3.0
@@ -46,14 +60,13 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/Standing W_Briefcase Idle.fbx::Armature|mixamo.com|Layer0"],
+"clips": PackedStringArray("res://models/player/Standing W_Briefcase Idle.fbx::Armature|mixamo.com|Layer0"),
 "times": PackedFloat32Array(0)
 }
 
-[sub_resource type="Animation" id="Animation_walk"]
-resource_name = "walk"
-length = 1.0
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_jump"]
+resource_name = "jump"
+length = 0.5
 tracks/0/type = "animation"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -61,7 +74,21 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/running.fbx::Armature|mixamo.com|Layer0"],
+"clips": PackedStringArray("res://models/player/Jump From Wall.fbx::Armature|mixamo.com|Layer0"),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_land"]
+resource_name = "land"
+length = 0.5
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("res://models/player/Swing To Land.fbx::Armature|mixamo.com|Layer0"),
 "times": PackedFloat32Array(0)
 }
 
@@ -76,27 +103,12 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/running.fbx::Armature|mixamo.com|Layer0"],
+"clips": PackedStringArray("res://models/player/running.fbx::Armature|mixamo.com|Layer0"),
 "times": PackedFloat32Array(0)
 }
 
-[sub_resource type="Animation" id="Animation_jump"]
-resource_name = "jump"
-length = 0.5
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": ["res://models/player/Jump From Wall.fbx::Armature|mixamo.com|Layer0"],
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_fall"]
-resource_name = "fall"
-length = 1.0
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
 loop_mode = 1
 tracks/0/type = "animation"
 tracks/0/imported = false
@@ -105,36 +117,21 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/Falling.fbx::Armature|mixamo.com|Layer0"],
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_land"]
-resource_name = "land"
-length = 0.5
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": ["res://models/player/Swing To Land.fbx::Armature|mixamo.com|Layer0"],
+"clips": PackedStringArray("res://models/player/running.fbx::Armature|mixamo.com|Layer0"),
 "times": PackedFloat32Array(0)
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_main"]
 _data = {
-"fall": SubResource("Animation_fall"),
-"idle": SubResource("Animation_idle"),
-"jump": SubResource("Animation_jump"),
-"land": SubResource("Animation_land"),
-"run": SubResource("Animation_run"),
-"walk": SubResource("Animation_walk")
+&"fall": SubResource("Animation_fall"),
+&"idle": SubResource("Animation_idle"),
+&"jump": SubResource("Animation_jump"),
+&"land": SubResource("Animation_land"),
+&"run": SubResource("Animation_run"),
+&"walk": SubResource("Animation_walk")
 }
 
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.076310515, -0.20912385)
 slide_on_ceiling = false
 script = ExtResource("1_ffboj")
 
@@ -143,7 +140,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
 shape = SubResource("CapsuleShape3D_gdq8c")
 
 [node name="Shadow" type="Decal" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.9, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.309996, 0)
 size = Vector3(1, 2, 1)
 texture_albedo = ExtResource("3_0c7wt")
 modulate = Color(1, 1, 1, 0.705882)
@@ -151,6 +148,7 @@ normal_fade = 0.5
 
 [node name="ParticlesTrail" type="GPUParticles3D" parent="."]
 physics_interpolation_mode = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1501069, 0.3732717, -0.07139897)
 material_override = SubResource("StandardMaterial3D_q7stj")
 cast_shadow = 0
 amount = 60
@@ -166,13 +164,6 @@ autoplay = true
 
 [node name="Character" parent="." instance=ExtResource("5_f46kd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.045980632, 0.27492583, 0)
-
-[node name="AnimationPlayer" parent="Character"]
-libraries = {
-"": SubResource("AnimationLibrary_main")
-}
-autoplay = "idle"
-playback_default_blend_time = 0.2
 
 [node name="Skeleton3D" parent="Character" index="0"]
 bones/0/position = Vector3(-0.022790246, 0.50191426, -0.003910728)
@@ -222,5 +213,12 @@ bones/30/position = Vector3(5.01268e-10, 0.20399243, 1.8144994e-10)
 bones/30/rotation = Quaternion(0.55150515, 0.1046772, 0.15736605, 0.8124782)
 bones/31/position = Vector3(-1.0464052e-09, 0.18334906, 1.2838453e-10)
 bones/31/rotation = Quaternion(0.4001702, 0.043122973, -0.012384654, 0.9153419)
+
+[node name="AnimationPlayer" parent="Character" index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_main")
+}
+autoplay = "idle"
+playback_default_blend_time = 0.2
 
 [editable path="Character"]
