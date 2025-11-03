@@ -2,7 +2,7 @@
 
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://scenes/main-environment.tres" id="1_ahusb"]
 [ext_resource type="Script" uid="uid://djpme521r3cxe" path="res://scripts/main.gd" id="1_jkv2x"]
-[ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_onms2"]
+[ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player_new.tscn" id="2_onms2"]
 [ext_resource type="Script" uid="uid://bcg2kkbsnttec" path="res://scripts/view.gd" id="5_bg0fr"]
 [ext_resource type="PackedScene" uid="uid://cnymdajj1vsqm" path="res://objects/platform.tscn" id="6_sdmev"]
 [ext_resource type="PackedScene" uid="uid://rjh4ifidqrfp" path="res://objects/platform_medium.tscn" id="7_ixpj3"]
@@ -30,7 +30,7 @@ script = ExtResource("1_jkv2x")
 environment = ExtResource("1_ahusb")
 
 [node name="Player" parent="." node_paths=PackedStringArray("view") groups=["player"] instance=ExtResource("2_onms2")]
-transform = Transform3D(0.9998948, -0.014503177, 0, 0.014500245, 0.9996927, 0.020104839, -0.00029158403, -0.020102723, 0.9997979, 0.22379126, 0.2143175, -0.1741906)
+transform = Transform3D(0.69492686, -0.010079708, 0, 0.01007767, 0.6947864, 0.013972863, -0.0002026509, -0.013971392, 0.6948595, 0.22379126, 0.7691874, 0.15520184)
 wall_min_slide_angle = 0.20071286
 view = NodePath("../View")
 
