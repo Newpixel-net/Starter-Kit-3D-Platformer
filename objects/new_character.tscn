@@ -13,7 +13,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/idle.fbx::Armature|mixamo.com|Layer0"],
+"clips": ["res://objects/animation/Idle.fbx::Armature|mixamo.com|Layer0"],
 "times": PackedFloat32Array(0)
 }
 
@@ -28,7 +28,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/walking.fbx::Armature|mixamo.com|Layer0"],
+"clips": ["res://objects/animation/walk.fbx::Armature|mixamo.com|Layer0"],
 "times": PackedFloat32Array(0)
 }
 
@@ -43,7 +43,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/running.fbx::Armature|mixamo.com|Layer0"],
+"clips": ["res://objects/animation/run.fbx::Armature|mixamo.com|Layer0"],
 "times": PackedFloat32Array(0)
 }
 
@@ -57,7 +57,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/jumping up.fbx::Armature|mixamo.com|Layer0"],
+"clips": ["res://objects/animation/jump.fbx::Armature|mixamo.com|Layer0"],
 "times": PackedFloat32Array(0)
 }
 
@@ -72,7 +72,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/falling idle.fbx::Armature|mixamo.com|Layer0"],
+"clips": ["res://objects/animation/fall.fbx::Armature|mixamo.com|Layer0"],
 "times": PackedFloat32Array(0)
 }
 
@@ -86,7 +86,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": ["res://models/player/hard landing.fbx::Armature|mixamo.com|Layer0"],
+"clips": ["res://objects/animation/land.fbx::Armature|mixamo.com|Layer0"],
 "times": PackedFloat32Array(0)
 }
 

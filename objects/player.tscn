@@ -45,7 +45,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("res://models/player/Falling.fbx::Armature|mixamo.com|Layer0"),
+"clips": PackedStringArray("res://objects/animation/fall.fbx::Armature|mixamo.com|Layer0"),
 "times": PackedFloat32Array(0)
 }
 
@@ -60,7 +60,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("res://models/player/Standing W_Briefcase Idle.fbx::Armature|mixamo.com|Layer0"),
+"clips": PackedStringArray("res://objects/animation/Idle.fbx::Armature|mixamo.com|Layer0"),
 "times": PackedFloat32Array(0)
 }
 
@@ -74,8 +74,8 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("res://models/player/Jump From Wall.fbx::Armature|mixamo.com|Layer0"),
-"times": PackedFloat32Array(-2.3666666)
+"clips": PackedStringArray("res://objects/animation/jump.fbx::Armature|mixamo.com|Layer0"),
+"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_land"]
@@ -88,7 +88,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("res://models/player/Swing To Land.fbx::Armature|mixamo.com|Layer0"),
+"clips": PackedStringArray("res://objects/animation/land.fbx::Armature|mixamo.com|Layer0"),
 "times": PackedFloat32Array(0)
 }
 
@@ -103,7 +103,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("res://models/player/running.fbx::Armature|mixamo.com|Layer0"),
+"clips": PackedStringArray("res://objects/animation/run.fbx::Armature|mixamo.com|Layer0"),
 "times": PackedFloat32Array(0)
 }
 
@@ -117,7 +117,7 @@ tracks/0/path = NodePath("Skeleton3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"clips": PackedStringArray("res://models/player/running.fbx::Armature|mixamo.com|Layer0"),
+"clips": PackedStringArray("res://objects/animation/walk.fbx::Armature|mixamo.com|Layer0"),
 "times": PackedFloat32Array(0)
 }
 
