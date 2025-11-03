@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dl2ed4gkybggf"]
+[gd_scene load_steps=18 format=3 uid="uid://dl2ed4gkybggf"]
 
 [ext_resource type="Script" uid="uid://br1k30d32naot" path="res://scripts/player.gd" id="1_ffboj"]
 [ext_resource type="Texture2D" uid="uid://8ggihh27mlrr" path="res://sprites/blob_shadow.png" id="3_0c7wt"]
@@ -35,6 +35,104 @@ gravity = Vector3(0, 0.1, 0)
 scale_min = 0.75
 scale_curve = SubResource("CurveTexture_f46kd")
 
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": ["res://models/player/Standing W_Briefcase Idle.fbx::Armature|mixamo.com|Layer0"],
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_walk"]
+resource_name = "walk"
+length = 1.0
+loop_mode = 1
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": ["res://models/player/running.fbx::Armature|mixamo.com|Layer0"],
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_run"]
+resource_name = "run"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": ["res://models/player/running.fbx::Armature|mixamo.com|Layer0"],
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_jump"]
+resource_name = "jump"
+length = 0.5
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": ["res://models/player/Jump From Wall.fbx::Armature|mixamo.com|Layer0"],
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_fall"]
+resource_name = "fall"
+length = 1.0
+loop_mode = 1
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": ["res://models/player/Falling.fbx::Armature|mixamo.com|Layer0"],
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_land"]
+resource_name = "land"
+length = 0.5
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": ["res://models/player/Swing To Land.fbx::Armature|mixamo.com|Layer0"],
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_main"]
+_data = {
+"fall": SubResource("Animation_fall"),
+"idle": SubResource("Animation_idle"),
+"jump": SubResource("Animation_jump"),
+"land": SubResource("Animation_land"),
+"run": SubResource("Animation_run"),
+"walk": SubResource("Animation_walk")
+}
+
 [node name="Player" type="CharacterBody3D"]
 slide_on_ceiling = false
 script = ExtResource("1_ffboj")
@@ -69,7 +167,14 @@ autoplay = true
 [node name="Character" parent="." instance=ExtResource("5_f46kd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.045980632, 0.27492583, 0)
 
-[node name="Skeleton3D" parent="Character" index="0"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_main")
+}
+autoplay = "idle"
+playback_default_blend_time = 0.2
+
+[node name="Skeleton3D" parent="Character" index="1"]
 bones/0/position = Vector3(-0.022790246, 0.50191426, -0.003910728)
 bones/0/rotation = Quaternion(0.01765699, 0.5550108, -0.0374121, 0.8308139)
 bones/1/rotation = Quaternion(0.034472156, -0.015175559, 0.0040289876, 0.9992823)
