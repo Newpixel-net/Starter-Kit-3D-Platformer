@@ -167,7 +167,7 @@ autoplay = true
 [node name="Character" parent="." instance=ExtResource("5_f46kd")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.045980632, 0.27492583, 0)
 
-[node name="AnimationPlayer" parent="Character"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Character" index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_main")
 }
