@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bivegoa6dxoix"
-path="res://.godot/imported/running.fbx-45498285c718cc40278452f2ecd15cb1.scn"
+uid="uid://cb26fuqjkkcfw"
+path="res://.godot/imported/Running.fbx-bd4177a3b1cae31189e6d3e53cd26eeb.scn"
 
 [deps]
 
-source_file="res://models/player/running.fbx"
-dest_files=["res://.godot/imported/running.fbx-45498285c718cc40278452f2ecd15cb1.scn"]
+source_file="res://models/player/Running.fbx"
+dest_files=["res://.godot/imported/Running.fbx-bd4177a3b1cae31189e6d3e53cd26eeb.scn"]
 
 [params]
 

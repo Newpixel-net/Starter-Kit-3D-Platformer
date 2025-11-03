@@ -2,7 +2,7 @@
 
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://scenes/main-environment.tres" id="1_ahusb"]
 [ext_resource type="Script" uid="uid://djpme521r3cxe" path="res://scripts/main.gd" id="1_jkv2x"]
-[ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player_new.tscn" id="2_onms2"]
+[ext_resource type="PackedScene" uid="uid://dl2ed4gkybggf" path="res://objects/player.tscn" id="2_onms2"]
 [ext_resource type="Script" uid="uid://bcg2kkbsnttec" path="res://scripts/view.gd" id="5_bg0fr"]
 [ext_resource type="PackedScene" uid="uid://cnymdajj1vsqm" path="res://objects/platform.tscn" id="6_sdmev"]
 [ext_resource type="PackedScene" uid="uid://rjh4ifidqrfp" path="res://objects/platform_medium.tscn" id="7_ixpj3"]
@@ -30,7 +30,7 @@ script = ExtResource("1_jkv2x")
 environment = ExtResource("1_ahusb")
 
 [node name="Player" parent="." node_paths=PackedStringArray("view") groups=["player"] instance=ExtResource("2_onms2")]
-transform = Transform3D(0.69492686, -0.010079708, 0, 0.01007767, 0.6947864, 0.013972863, -0.0002026509, -0.013971392, 0.6948595, 0.22379126, 0.7691874, 0.15520184)
+transform = Transform3D(-0.01208369, 0.008228127, -0.69484615, 0.009975112, 0.6948816, 0.008055077, 0.69482327, -0.009832856, -0.012199731, 0.02888292, 0.34590745, 0.24947028)
 wall_min_slide_angle = 0.20071286
 view = NodePath("../View")
 
@@ -40,7 +40,7 @@ script = ExtResource("5_bg0fr")
 target = NodePath("../Player")
 
 [node name="Camera" type="Camera3D" parent="View"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+transform = Transform3D(0.99813396, -0.021755904, 0.05705157, 0.021512702, 0.99975675, 0.004873544, -0.057143778, -0.0036374778, 0.99836004, 0.24493647, 0.65343976, 8.846655)
 current = true
 fov = 40.0
 
