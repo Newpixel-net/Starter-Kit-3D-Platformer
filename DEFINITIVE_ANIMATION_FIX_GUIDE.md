@@ -304,10 +304,24 @@ Open `objects/player.tscn` in text editor.
 [ext_resource type="Animation" uid="uid://dofgxqqjbx8w7" path="res://models/player/walk.res" id="11_walk"]
 ```
 
-**Note on UIDs:**
-- Use the UIDs shown above (they match the actual .res files)
-- Or use placeholder UIDs - Godot will regenerate them
+**⚠️ Note on UIDs:**
+- The UIDs shown above will generate warnings (but animations will still work!)
+- Godot will use "text path instead" fallback (which works perfectly)
+- Warnings are harmless - see `UID_WARNINGS_EXPLAINED.md`
+- **To avoid warnings:** Omit `uid="..."` entirely, Godot will auto-generate correct UIDs
+- **Quick fix:** Use UIDs as shown, ignore warnings, optionally clean up later
 - walk.res uses same UID as run.res since it's a copy
+
+**Example without UIDs (cleaner, no warnings):**
+```gdscript
+[ext_resource type="Animation" path="res://models/player/fall.res" id="6_fall"]
+[ext_resource type="Animation" path="res://models/player/idle.res" id="7_idle"]
+[ext_resource type="Animation" path="res://models/player/jump.res" id="8_jump"]
+[ext_resource type="Animation" path="res://models/player/land.res" id="9_land"]
+[ext_resource type="Animation" path="res://models/player/run.res" id="10_run"]
+[ext_resource type="Animation" path="res://models/player/walk.res" id="11_walk"]
+```
+When Godot opens the project, it will add correct UIDs automatically.
 
 ### Step 4: Remove Broken SubResource Animations
 
@@ -404,13 +418,25 @@ playback_default_blend_time = 0.2
 
 2. **Open Godot project**
 
-3. **Open objects/player.tscn**
+3. **⚠️ EXPECTED: You may see UID warnings in console:**
+   ```
+   load: res://objects/player.tscn : ext_resource: Invalid UID 'uid://...'
+       - using text path instead: res://models/player/fall.res
+   ```
 
-4. **Select Player > Character > AnimationPlayer**
+   **These warnings are HARMLESS and EXPECTED!**
+   - Animations will work perfectly
+   - Godot uses text path fallback (which works)
+   - See `UID_WARNINGS_EXPLAINED.md` for details
+   - Fix is optional (remove UIDs, let Godot regenerate)
 
-5. **In Animation panel, select "idle" from dropdown**
+4. **Open objects/player.tscn**
 
-6. **VERIFY: Timeline shows BONE TRACKS:**
+5. **Select Player > Character > AnimationPlayer**
+
+6. **In Animation panel, select "idle" from dropdown**
+
+7. **VERIFY: Timeline shows BONE TRACKS:**
    ```
    ✅ Skeleton3D:mixamorig_Hips
    ✅ Skeleton3D:mixamorig_Spine
@@ -423,11 +449,13 @@ playback_default_blend_time = 0.2
    ✅ ... (20-30 more tracks)
    ```
 
-7. **Click play button (▶) - character should animate!**
+8. **Click play button (▶) - character should animate!**
 
-8. **Test all 6 animations**
+9. **Test all 6 animations**
 
-9. **Run game (F5) - animations should work in-game**
+10. **Run game (F5) - animations should work in-game**
+
+**✅ If timeline shows bone tracks and animations play → SUCCESS! UID warnings don't matter.**
 
 ---
 
@@ -551,8 +579,8 @@ Use this checklist when implementing the fix:
 - [ ] File saved
 
 ### In Godot Editor:
-- [ ] Project opens without errors
-- [ ] player.tscn opens without errors
+- [ ] Project opens (⚠️ UID warnings expected - see UID_WARNINGS_EXPLAINED.md)
+- [ ] player.tscn opens without critical errors
 - [ ] Character > AnimationPlayer visible in scene tree
 - [ ] Animation panel shows 6 animations: fall, idle, jump, land, run, walk
 - [ ] Selecting "idle" animation shows BONE TRACKS in timeline
@@ -561,7 +589,7 @@ Use this checklist when implementing the fix:
 - [ ] Clicking play (▶) animates the character
 - [ ] All 6 animations have bone tracks
 - [ ] All 6 animations play when tested
-- [ ] No errors in Output panel
+- [ ] ⚠️ UID warnings in console are harmless (animations work via text path fallback)
 
 ### In-Game Testing:
 - [ ] Run game (F5)
@@ -573,7 +601,7 @@ Use this checklist when implementing the fix:
 - [ ] Fall animation plays when falling
 - [ ] Land animation plays when landing
 - [ ] No animation glitches or freezing
-- [ ] No console errors related to animations
+- [ ] ⚠️ Console may show UID warnings - ignore if animations work
 
 ---
 
@@ -902,3 +930,5 @@ ExtResource loads .res file → .res contains bone tracks → AnimationPlayer pr
 **Last successful application:** 2025-11-04
 **Status:** ✅ VERIFIED WORKING
 **Result:** Animations play, timeline shows bone tracks, problem solved after 10+ failed attempts
+**Known harmless warnings:** UID mismatches (see UID_WARNINGS_EXPLAINED.md)
+**Protected backup:** Git tag `animations-working-with-uid-warnings`
