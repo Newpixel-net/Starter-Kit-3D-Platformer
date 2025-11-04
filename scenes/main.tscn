@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bqqgyqafm7xwp"]
+[gd_scene load_steps=28 format=3 uid="uid://bqqgyqafm7xwp"]
 
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://scenes/main-environment.tres" id="1_ahusb"]
 [ext_resource type="Script" uid="uid://djpme521r3cxe" path="res://scripts/main.gd" id="1_jkv2x"]
@@ -12,10 +12,20 @@
 [ext_resource type="PackedScene" uid="uid://dfpisimsgf5ce" path="res://objects/coin.tscn" id="10_fwhys"]
 [ext_resource type="Script" uid="uid://bap462su1xjtx" path="res://scripts/hud.gd" id="11_apvpm"]
 [ext_resource type="PackedScene" uid="uid://85ldumyetgou" path="res://objects/brick.tscn" id="12_jkv2x"]
+[ext_resource type="PackedScene" uid="uid://bl36snbdnb7vf" path="res://models/environment/jungle/flower_purpleA.glb" id="13_2wyq8"]
 [ext_resource type="PackedScene" uid="uid://dy017k58p20sk" path="res://objects/cloud.tscn" id="13_drtpy"]
 [ext_resource type="Texture2D" uid="uid://cd7oyc56ehkx1" path="res://sprites/coin.png" id="13_jfda3"]
 [ext_resource type="ArrayMesh" uid="uid://bkyb0o2ipxxya" path="res://meshes/brick.res" id="16_jbj1t"]
 [ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="17_tk810"]
+[ext_resource type="PackedScene" uid="uid://6f46vqcxu1wl" path="res://models/collectibles/fruits/apple.glb" id="18_vxglm"]
+[ext_resource type="PackedScene" uid="uid://c7v5nd7t2ldk5" path="res://models/collectibles/fruits/pineapple.glb" id="19_2f3dj"]
+[ext_resource type="PackedScene" uid="uid://bsrmqj84lksd7" path="res://models/cloud.glb" id="20_yq6so"]
+[ext_resource type="PackedScene" uid="uid://brg64eln7l7wv" path="res://models/dust.glb" id="21_fv21b"]
+[ext_resource type="PackedScene" uid="uid://dkw27llxh1d4w" path="res://models/grass-small.glb" id="22_tel4y"]
+[ext_resource type="PackedScene" uid="uid://fqfc0dtl2xlc" path="res://models/platform-grass-large-round.glb" id="23_qkpxi"]
+[ext_resource type="PackedScene" uid="uid://gpcnyffdf636" path="res://models/environment/jungle/tree_pineTallD_detailed.glb" id="24_5q0nq"]
+[ext_resource type="PackedScene" uid="uid://b5flv0725gqy7" path="res://models/environment/jungle/tree_pineRoundB.glb" id="25_dgi5k"]
+[ext_resource type="PackedScene" uid="uid://crl0bpv0dqanf" path="res://models/environment/jungle/tree_pineTallC_detailed.glb" id="26_j8jky"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_38ys3"]
 font = ExtResource("17_tk810")
@@ -169,6 +179,9 @@ transform = Transform3D(0.8552648, 0, -0.5181912, 0, 1, 0, 0.5181912, 0, 0.85526
 [node name="brick3" parent="World" instance=ExtResource("12_jkv2x")]
 transform = Transform3D(0.93908226, 0, 0.34369248, 0, 1, 0, -0.34369248, 0, 0.93908226, -19.034018, 3.215011, 2.869449)
 
+[node name="flower_purpleA2" parent="World" instance=ExtResource("13_2wyq8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7470877, 0.57270455, 1.4513085)
+
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.422618, -0.694272, 0.582563, 0, 0.642788, 0.766044, -0.906308, 0.323744, -0.271654, 0, 0, 0)
 shadow_enabled = true
@@ -220,5 +233,32 @@ metadata/_edit_use_anchors_ = true
 [node name="Brick" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6014132, -2.573875, 7.238248)
 mesh = ExtResource("16_jbj1t")
+
+[node name="apple2" parent="." instance=ExtResource("18_vxglm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.1786337, 0.5, 1.4131277)
+
+[node name="pineapple2" parent="." instance=ExtResource("19_2f3dj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2689836, 0.89158416, 1.2848825)
+
+[node name="cloud" parent="." instance=ExtResource("20_yq6so")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.692277, -2.3841858e-07, -3.5761766)
+
+[node name="dust" parent="." instance=ExtResource("21_fv21b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9954469, 0.6650002, 0.8626914)
+
+[node name="grass-small" parent="." instance=ExtResource("22_tel4y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.9812555, 0.5, 2.8474638)
+
+[node name="platform-grass-large-round" parent="." instance=ExtResource("23_qkpxi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2386675, 0, -7.992199)
+
+[node name="tree_pineTallD_detailed2" parent="." instance=ExtResource("24_5q0nq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.7561426, 1.55, -0.5270667)
+
+[node name="tree_pineRoundB2" parent="." instance=ExtResource("25_dgi5k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.855414, 0, -7.145878)
+
+[node name="tree_pineTallC_detailed2" parent="." instance=ExtResource("26_j8jky")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9500308, 2.55, -2.7527251)
 
 [connection signal="coin_collected" from="player" to="HUD" method="_on_coin_collected"]
