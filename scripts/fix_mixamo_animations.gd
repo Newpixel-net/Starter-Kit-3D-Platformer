@@ -1,6 +1,25 @@
 @tool
 extends EditorScript
 
+## ⚠️ OBSOLETE - DO NOT USE THIS SCRIPT ⚠️
+##
+## This script is from a previous animation setup attempt and is NO LONGER COMPATIBLE
+## with the current project configuration.
+##
+## CURRENT ANIMATION SETUP (as of 2025-11-04):
+## - Animations are stored as .res files in models/player/
+## - player.tscn uses ExtResource to reference these .res files directly
+## - NO automation script is needed
+##
+## RUNNING THIS SCRIPT WILL BREAK THE CURRENT SETUP by:
+## - Deleting existing .res-based animations from AnimationLibrary
+## - Attempting to extract from objects/animation/ (wrong location)
+## - Overwriting the working configuration
+##
+## If you need to modify animations, edit the .res files directly in Godot editor.
+##
+## -------------------------------------------------------------------
+## ORIGINAL DESCRIPTION (OBSOLETE):
 ## MIXAMO ANIMATION FIX AUTOMATION SCRIPT
 ##
 ## This script automatically extracts animations from Mixamo FBX files
@@ -64,6 +83,18 @@ const ANIMATION_CONFIGS = {
 }
 
 func _run():
+	print("\n========================================")
+	print("⚠️  SCRIPT DISABLED - DO NOT USE  ⚠️")
+	print("========================================\n")
+	print("This script is OBSOLETE and incompatible with the current setup.")
+	print("Running it will BREAK your working animations!")
+	print("")
+	print("Current setup uses .res files from models/player/")
+	print("See script header comments for details.")
+	print("\n========================================\n")
+	return  # EXIT IMMEDIATELY - DO NOT RUN
+
+	# Original code below (disabled):
 	print("\n========================================")
 	print("MIXAMO ANIMATION FIX - STARTING")
 	print("========================================\n")
