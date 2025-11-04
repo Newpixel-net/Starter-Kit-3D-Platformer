@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d2wfdiph3158x"
-path="res://.godot/imported/spin.fbx-186bb357985eef72e8475b2124e7a547.scn"
+path="res://.godot/imported/spin.fbx-aab949eb9368345ec5600424c00c198e.scn"
 
 [deps]
 
 source_file="res://models/player/spin.fbx"
-dest_files=["res://.godot/imported/spin.fbx-186bb357985eef72e8475b2124e7a547.scn"]
+dest_files=["res://.godot/imported/spin.fbx-aab949eb9368345ec5600424c00c198e.scn"]
 
 [params]
 
@@ -43,7 +43,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://models/player/spin.res",
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "uid://dkkgpi0kx5bl4",
+"save_to_file/path": "uid://bimdhwx01wio6",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
