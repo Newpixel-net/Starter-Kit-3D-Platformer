@@ -130,7 +130,10 @@ func handle_effects(delta):
 
 	# Don't play normal animations during spin
 	if is_spinning:
-		# Could play a spin animation here if we had one
+		# Play spin attack animation
+		if animation.current_animation != "spin":
+			animation.play("spin", 0.1)
+		animation.speed_scale = 1.5  # Speed up for fast spinning
 		return
 
 	if is_on_floor():
@@ -224,10 +227,13 @@ func jump():
 	model.scale = Vector3(0.5, 1.5, 0.5)
 
 	if jump_single:
-		jump_single = false;
-		jump_double = true;
+		# First jump - use regular jump animation
+		jump_single = false
+		jump_double = true
 	else:
-		jump_double = false;
+		# Second jump - use double jump animation
+		animation.play("double_jump", 0.1)
+		jump_double = false
 
 
 # Check if can perform spin attack
@@ -318,6 +324,9 @@ func collect_fruit(value: int = 1) -> void:
 # Player dies
 func die() -> void:
 	print("💀 Player died!")
+
+	# Play death animation
+	animation.play("death")
 
 	# Disable player control during death
 	set_physics_process(false)
