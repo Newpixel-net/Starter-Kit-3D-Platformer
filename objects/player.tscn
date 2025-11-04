@@ -1,10 +1,15 @@
-[gd_scene load_steps=18 format=3 uid="uid://dl2ed4gkybggf"]
+[gd_scene load_steps=17 format=3 uid="uid://dl2ed4gkybggf"]
 
 [ext_resource type="Script" uid="uid://br1k30d32naot" path="res://scripts/player.gd" id="1_ffboj"]
 [ext_resource type="Texture2D" uid="uid://8ggihh27mlrr" path="res://sprites/blob_shadow.png" id="3_0c7wt"]
 [ext_resource type="ArrayMesh" uid="uid://deu06eho4c74" path="res://meshes/dust.res" id="4_mvhqy"]
 [ext_resource type="PackedScene" uid="uid://xigtm3wcjsya" path="res://models/player/player.fbx" id="5_f46kd"]
 [ext_resource type="AudioStream" uid="uid://cydjn1ct3hps2" path="res://sounds/walking.ogg" id="5_ics1s"]
+[ext_resource type="Animation" path="res://models/player/fall.res" id="6_fall"]
+[ext_resource type="Animation" path="res://models/player/idle.res" id="7_idle"]
+[ext_resource type="Animation" path="res://models/player/jump.res" id="8_jump"]
+[ext_resource type="Animation" path="res://models/player/land.res" id="9_land"]
+[ext_resource type="Animation" path="res://models/player/run.res" id="10_run"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gdq8c"]
 radius = 0.3
@@ -35,100 +40,14 @@ gravity = Vector3(0, 0.1, 0)
 scale_min = 0.75
 scale_curve = SubResource("CurveTexture_f46kd")
 
-[sub_resource type="Animation" id="Animation_fall"]
-resource_name = "fall"
-loop_mode = 1
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": PackedStringArray("res://objects/animation/fall.fbx::Armature|mixamo.com|Layer0"),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_idle"]
-resource_name = "idle"
-length = 3.0
-loop_mode = 1
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": PackedStringArray("res://objects/animation/Idle.fbx::Armature|mixamo.com|Layer0"),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_jump"]
-resource_name = "jump"
-length = 0.5
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": PackedStringArray("res://objects/animation/jump.fbx::Armature|mixamo.com|Layer0"),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_land"]
-resource_name = "land"
-length = 0.5
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": PackedStringArray("res://objects/animation/land.fbx::Armature|mixamo.com|Layer0"),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_run"]
-resource_name = "run"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": PackedStringArray("res://objects/animation/run.fbx::Armature|mixamo.com|Layer0"),
-"times": PackedFloat32Array(0)
-}
-
-[sub_resource type="Animation" id="Animation_walk"]
-resource_name = "walk"
-loop_mode = 1
-tracks/0/type = "animation"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"clips": PackedStringArray("res://objects/animation/walk.fbx::Armature|mixamo.com|Layer0"),
-"times": PackedFloat32Array(0)
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_main"]
 _data = {
-&"fall": SubResource("Animation_fall"),
-&"idle": SubResource("Animation_idle"),
-&"jump": SubResource("Animation_jump"),
-&"land": SubResource("Animation_land"),
-&"run": SubResource("Animation_run"),
-&"walk": SubResource("Animation_walk")
+&"fall": ExtResource("6_fall"),
+&"idle": ExtResource("7_idle"),
+&"jump": ExtResource("8_jump"),
+&"land": ExtResource("9_land"),
+&"run": ExtResource("10_run"),
+&"walk": ExtResource("10_run")
 }
 
 [node name="Player" type="CharacterBody3D"]
