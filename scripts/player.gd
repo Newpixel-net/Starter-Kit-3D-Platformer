@@ -32,7 +32,7 @@ var spin_cooldown_timer = 0.0
 @onready var particles_trail = $ParticlesTrail
 @onready var sound_footsteps = $SoundFootsteps
 @onready var model = $Character
-@onready var animation = $AnimationPlayer
+@onready var animation = $Character/PlayerAnimations
 
 # Spin attack area - will be created in _ready()
 var spin_attack_area: Area3D
