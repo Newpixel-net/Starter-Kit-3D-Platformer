@@ -1,0 +1,75 @@
+[gd_scene load_steps=13 format=3 uid="uid://enemy001"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_enemy"]
+[ext_resource type="PackedScene" uid="uid://c3i7bj4k5m6n7" path="res://models/enemy/enemy_base.fbx" id="2_enemy_model"]
+[ext_resource type="Texture2D" uid="uid://8ggihh27mlrr" path="res://sprites/blob_shadow.png" id="3_shadow"]
+[ext_resource type="Animation" uid="uid://enemy_idle001" path="res://models/enemy/idle.res" id="4_idle"]
+[ext_resource type="Animation" uid="uid://enemy_walk001" path="res://models/enemy/walk.res" id="5_walk"]
+[ext_resource type="Animation" uid="uid://enemy_attack001" path="res://models/enemy/attack.res" id="6_attack"]
+[ext_resource type="Animation" uid="uid://enemy_death001" path="res://models/enemy/death.res" id="7_death"]
+[ext_resource type="Animation" uid="uid://enemy_hit001" path="res://models/enemy/hit.res" id="8_hit"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_enemy"]
+radius = 0.3
+height = 1.0
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_enemy"]
+_data = {
+&"attack": ExtResource("6_attack"),
+&"death": ExtResource("7_death"),
+&"hit": ExtResource("8_hit"),
+&"idle": ExtResource("4_idle"),
+&"walk": ExtResource("5_walk")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_detect"]
+radius = 5.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_attack"]
+radius = 1.5
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("1_enemy")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_enemy")
+
+[node name="Shadow" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.31, 0)
+size = Vector3(1, 2, 1)
+texture_albedo = ExtResource("3_shadow")
+modulate = Color(1, 1, 1, 0.5)
+normal_fade = 0.5
+
+[node name="Character" parent="." instance=ExtResource("2_enemy_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="AnimationPlayer" parent="Character" index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_enemy")
+}
+autoplay = "idle"
+playback_default_blend_time = 0.2
+
+[node name="DetectionArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="DetectionShape" type="CollisionShape3D" parent="DetectionArea"]
+shape = SubResource("SphereShape3D_detect")
+
+[node name="AttackArea" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 1
+
+[node name="AttackShape" type="CollisionShape3D" parent="AttackArea"]
+shape = SubResource("SphereShape3D_attack")
+
+[node name="PatrolTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[editable path="Character"]
