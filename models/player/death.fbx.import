@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d2wfdiph3158x"
-path="res://.godot/imported/death.fbx-fb74ca87d8d7862af05ed93913549af3.scn"
+path="res://.godot/imported/death.fbx-71857c2fceeac1111829d392395082d8.scn"
 
 [deps]
 
 source_file="res://models/player/death.fbx"
-dest_files=["res://.godot/imported/death.fbx-fb74ca87d8d7862af05ed93913549af3.scn"]
+dest_files=["res://.godot/imported/death.fbx-71857c2fceeac1111829d392395082d8.scn"]
 
 [params]
 
@@ -43,7 +43,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://models/player/death.res",
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "uid://dkkgpi0kx5bl4",
+"save_to_file/path": "uid://b3kqkdno4ryb8",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,

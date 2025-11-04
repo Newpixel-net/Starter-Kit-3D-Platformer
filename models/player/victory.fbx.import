@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d2wfdiph3158x"
-path="res://.godot/imported/victory.fbx-bcd165908341cda4fad8a296c5b48e7f.scn"
+path="res://.godot/imported/victory.fbx-d1f1c32b39596ce5b127b3802a620db6.scn"
 
 [deps]
 
 source_file="res://models/player/victory.fbx"
-dest_files=["res://.godot/imported/victory.fbx-bcd165908341cda4fad8a296c5b48e7f.scn"]
+dest_files=["res://.godot/imported/victory.fbx-d1f1c32b39596ce5b127b3802a620db6.scn"]
 
 [params]
 
@@ -43,7 +43,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://models/player/victory.res",
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "uid://dkkgpi0kx5bl4",
+"save_to_file/path": "uid://nexo1me5o31l",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,

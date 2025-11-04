@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d2wfdiph3158x"
-path="res://.godot/imported/double_jump.fbx-d30b738d8a6c589cfd2a7586136d566f.scn"
+path="res://.godot/imported/double_jump.fbx-8532c86adbd47b98148a62f0925f7071.scn"
 
 [deps]
 
 source_file="res://models/player/double_jump.fbx"
-dest_files=["res://.godot/imported/double_jump.fbx-d30b738d8a6c589cfd2a7586136d566f.scn"]
+dest_files=["res://.godot/imported/double_jump.fbx-8532c86adbd47b98148a62f0925f7071.scn"]
 
 [params]
 
@@ -43,7 +43,7 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://models/player/double_jump.res",
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "uid://dkkgpi0kx5bl4",
+"save_to_file/path": "uid://cp1k3pkdn41b",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
