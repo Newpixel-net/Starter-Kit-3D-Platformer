@@ -39,6 +39,9 @@ var spin_attack_area: Area3D
 
 
 func _ready() -> void:
+	# Add to player group for enemy detection
+	add_to_group("player")
+
 	# Create spin attack area
 	create_spin_attack_area()
 
@@ -319,6 +322,15 @@ func collect_fruit(value: int = 1) -> void:
 	PlayerStats.collect_fruit(value)
 	fruit_collected.emit(value)
 	print("🍎 Collected fruit! Total: ", PlayerStats.get_fruits())
+
+
+# Player takes damage
+func take_damage(amount: int = 1) -> void:
+	print("💥 Player took ", amount, " damage!")
+
+	# For now, any damage kills the player
+	# TODO: Add health system with PlayerStats
+	die()
 
 
 # Player dies
